@@ -19,6 +19,51 @@ const EXPENSE_CATEGORIES = ["Regalo", "Comida", "Evento", "Transporte", "Otros"]
 
 // ─── Modales de acción ────────────────────────────────────────────────────────
 
+function ModalEditar({ group, onClose, onSubmit, loading }) {
+  const [name,        setName]        = useState(group?.name || "");
+  const [description, setDescription] = useState(group?.description || "");
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="card max-w-sm w-full animate-bounce-in">
+        <h3 className="text-lg font-extrabold text-gray-800 mb-4">✏️ Editar Vaquita</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="label">Nombre *</label>
+            <input
+              className="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              maxLength={80}
+              autoFocus
+            />
+          </div>
+          <div>
+            <label className="label">Descripción</label>
+            <textarea
+              className="input resize-none"
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              maxLength={200}
+            />
+          </div>
+          <div className="flex gap-3">
+            <button onClick={onClose} className="btn-secondary flex-1 justify-center" disabled={loading}>Cancelar</button>
+            <button
+              onClick={() => onSubmit(name, description)}
+              disabled={!name.trim() || loading}
+              className="btn-primary flex-1 justify-center disabled:opacity-60"
+            >
+              {loading ? <><div className="spinner" /> Guardando...</> : "Guardar →"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ModalAporte({ onClose, onSubmit, loading }) {
   const [amount, setAmount] = useState("");
   const [note,   setNote]   = useState("");
@@ -137,6 +182,7 @@ export default function VaquitaDetalle() {
   // Modales
   const [showAporte,    setShowAporte]    = useState(false);
   const [showGasto,     setShowGasto]     = useState(false);
+  const [showEdit,      setShowEdit]      = useState(false);
   const [txLoading,     setTxLoading]     = useState(false);
   const [txState,       setTxState]       = useState("idle");
   const [txMessage,     setTxMessage]     = useState("");
@@ -349,6 +395,31 @@ export default function VaquitaDetalle() {
     }
   }
 
+  async function handleEdit(name, description) {
+    setShowEdit(false);
+    if (demoMode) {
+      setTxState("loading");
+      setTxMessage("Actualizando vaquita...");
+      await sleep(1500);
+      setGroup((prev) => ({ ...prev, name, description }));
+      setTxState("success");
+      setTxMessage("¡Vaquita actualizada!");
+      return;
+    }
+    try {
+      setTxState("loading");
+      setTxMessage("Actualizando en blockchain...");
+      const tx = await contract.updateGroup(id, name, description);
+      await tx.wait();
+      setGroup((prev) => ({ ...prev, name, description }));
+      setTxState("success");
+      setTxMessage("¡Vaquita actualizada correctamente!");
+    } catch (err) {
+      setTxState("error");
+      setTxMessage(err.reason || err.message);
+    }
+  }
+
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   // ─── Render ──────────────────────────────────────────────────────────────────
@@ -395,6 +466,7 @@ export default function VaquitaDetalle() {
       {demoMode && <DemoModeBanner />}
 
       {/* Modales de acción */}
+      {showEdit   && <ModalEditar group={group} onClose={() => setShowEdit(false)}   onSubmit={handleEdit}   loading={txLoading} />}
       {showAporte && <ModalAporte onClose={() => setShowAporte(false)} onSubmit={handleAporte} loading={txLoading} />}
       {showGasto  && <ModalGasto  onClose={() => setShowGasto(false)}  onSubmit={handleGasto}  loading={txLoading} />}
       <TxModal
@@ -409,7 +481,18 @@ export default function VaquitaDetalle() {
           <div className="flex items-start gap-3 mb-4">
             <span className="text-4xl">{categoryEmoji(group.category)}</span>
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-extrabold text-gray-800 leading-tight">{group.name}</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-extrabold text-gray-800 leading-tight">{group.name}</h1>
+                {isAdmin && (
+                  <button
+                    onClick={() => setShowEdit(true)}
+                    className="text-gray-400 hover:text-orange-500 transition-colors text-sm"
+                    title="Editar vaquita"
+                  >
+                    ✏️
+                  </button>
+                )}
+              </div>
               <div className="flex flex-wrap items-center gap-1.5 mt-1">
                 <span className="text-xs text-gray-400">{group.category}</span>
                 <span className={group.isPublic ? "badge-public" : "badge-private"}>

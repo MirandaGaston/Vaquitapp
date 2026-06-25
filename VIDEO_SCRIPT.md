@@ -6,7 +6,13 @@
 
 **Duración total:** 90 segundos  
 **Formato:** Screenshare + voz en off  
-**Herramienta sugerida:** OBS Studio o Loom
+**Herramienta sugerida:** OBS Studio o Loom  
+**Voz:** ElevenLabs (español rioplatense)
+
+**Perfiles del demo:**
+- 👑 **Alejo** — Admin (Cuenta #0 Hardhat)
+- 👤 **Pedro** — Miembro (Cuenta #1 Hardhat)
+- 👤 **Matias** — Miembro (Cuenta #2 Hardhat)
 
 ---
 
@@ -19,63 +25,91 @@
 
 ---
 
-## ESCENA 2 — Conectar y configurar perfil (0:10 - 0:20)
+## ESCENA 2 — Conectar wallet y crear perfil de Alejo (0:10 - 0:20)
 
-**Pantalla:** Clic en "Conectar MetaMask" → pantalla de perfil → elegir avatar y escribir "Mati"
+**Pantalla:** Clic en "Conectar MetaMask" → pantalla de perfil → elegir avatar → escribir "Alejo" → guardar
 
 **Voz:**
-> "Sin email, sin contraseña. El usuario se identifica con su wallet de MetaMask. Solo necesita un apodo."
+> "Sin email, sin contraseña. La identidad es la wallet. Alejo elige su apodo y ya está dentro."
 
 ---
 
 ## ESCENA 3 — Crear la vaquita (0:20 - 0:35)
 
-**Pantalla:** Formulario de creación → campos completos → clic crear → modal de confirmación de MetaMask → modal "Transacción confirmada"
+**Pantalla:** Nueva vaquita → completar formulario → clic crear → MetaMask confirma → modal "Transacción confirmada"
 
 **Voz:**
-> "Creamos la vaquita 'Regalo para el cumple de Sofi'. Al confirmar, se ejecuta la función `createGroup` en el contrato Solidity. El evento queda registrado en blockchain."
+> "Alejo crea la vaquita 'Regalo para el cumple de Sofi'. Al confirmar, se ejecuta `createGroup` en el contrato Solidity. El evento queda grabado en blockchain."
 
 ---
 
-## ESCENA 4 — Solicitar y aprobar miembro (0:35 - 0:55)
+## ESCENA 4 — Pedro solicita unirse (0:35 - 0:48)
 
-**Pantalla:** Cambiar cuenta MetaMask → solicitar unirme → volver a admin → aprobar → animación de confirmación
+**Pantalla:** Cambiar a cuenta Pedro en MetaMask → app redirige a landing → conectar → crear perfil "Pedro" → ir a la vaquita → clic "Solicitar unirme" → MetaMask confirma
 
 **Voz:**
-> "Otro usuario solicita unirse. El administrador ve la solicitud pendiente y la aprueba con un clic. La función `approveMember` actualiza el estado en el contrato."
+> "Pedro entra con su wallet, ve la vaquita pública y solicita unirse. La solicitud queda pendiente hasta que Alejo la apruebe."
 
 ---
 
-## ESCENA 5 — Aportes y gasto (0:55 - 1:15)
+## ESCENA 5 — Matias solicita unirse (0:48 - 0:58)
 
-**Pantalla:** Modal de aporte → VAQ$ 30.000 → confirmación → otro aporte → modal de gasto → VAQ$ 55.000 → saldos actualizados
+**Pantalla:** Cambiar a cuenta Matias → conectar → crear perfil "Matias" → ir a la vaquita → clic "Solicitar unirme"
 
 **Voz:**
-> "Los miembros cargan aportes y el admin registra gastos. El contrato valida que ningún gasto supere el saldo disponible. Los montos son ficticios — VAQ$."
+> "Matias hace lo mismo. El admin puede ver todas las solicitudes pendientes en el panel de miembros."
 
 ---
 
-## ESCENA 6 — Historial (1:15 - 1:30)
+## ESCENA 6 — Alejo aprueba a los dos (0:58 - 1:10)
 
-**Pantalla:** Scroll al historial → mostrar lista de movimientos con wallets, montos y timestamps
+**Pantalla:** Volver a Alejo → ver solicitudes pendientes de Pedro y Matias → aprobar a los dos → badges actualizados
 
 **Voz:**
-> "El historial es transparente e inmutable. Cada movimiento tiene wallet, monto, fecha y categoría. Aportado: VAQ$ 70.000. Gastado: VAQ$ 55.000. Saldo: VAQ$ 15.000."
+> "Alejo aprueba a Pedro y a Matias. La función `approveMember` actualiza el estado en el contrato. Ahora pueden aportar."
 
 ---
 
-## ESCENA 7 — Cierre (1:30 - 1:45)
+## ESCENA 7 — Aportes (1:10 - 1:22)
 
-**Pantalla:** Panel técnico al final de la vaquita → logo Vaquitapp
+**Pantalla:** Pedro aporta VAQ$ 30.000 → Matias aporta VAQ$ 20.000 → Alejo aporta VAQ$ 20.000 → saldo actualizado a VAQ$ 70.000
 
 **Voz:**
-> "Vaquitapp demuestra que blockchain puede hacer más transparentes las interacciones grupales cotidianas — sin bancos, sin apps de terceros. Solo código, wallets y consenso. 🐄"
+> "Pedro, Matias y Alejo cargan sus aportes. Cada uno firma la transacción con su wallet. El total aportado se actualiza en tiempo real."
+
+---
+
+## ESCENA 8 — Gasto (1:22 - 1:32)
+
+**Pantalla:** Alejo carga gasto "Compra del regalo" VAQ$ 55.000 → saldo baja a VAQ$ 15.000
+
+**Voz:**
+> "Alejo registra el gasto. El contrato valida que no supere el saldo disponible. Aportado: VAQ$ 70.000. Gastado: VAQ$ 55.000. Saldo: VAQ$ 15.000."
+
+---
+
+## ESCENA 9 — Historial (1:32 - 1:42)
+
+**Pantalla:** Scroll al historial → movimientos de Alejo, Pedro y Matias con wallets, montos y timestamps
+
+**Voz:**
+> "El historial es transparente e inmutable. Tres wallets distintas, cada movimiento firmado. Nadie puede borrar ni modificar nada."
+
+---
+
+## ESCENA 10 — Cierre (1:42 - 1:50)
+
+**Pantalla:** Panel blockchain al final → logo Vaquitapp
+
+**Voz:**
+> "Vaquitapp demuestra que blockchain puede hacer más transparentes las interacciones grupales cotidianas. Sin bancos, sin apps de terceros. Solo código, wallets y consenso. 🐄"
 
 ---
 
 ## Tips para grabar
 
-- Usá 1280×720 mínimo
-- Tenés el Modo Demo si MetaMask falla: los datos mock son idénticos visualmente
-- Podés acelerar al 1.2x las esperas de MetaMask en edición
-- Agrega texto en pantalla para destacar los nombres de los eventos blockchain
+- Resolución mínima 1280×720
+- Acelerá al 1.5x las esperas de MetaMask en edición
+- Agregá texto en pantalla cuando aparezcan los nombres de eventos: `GroupCreated`, `ContributionAdded`, `ExpenseAdded`
+- Si algo falla en vivo, tenés el **Modo Demo** como respaldo — los datos mock son idénticos visualmente
+- Grabá primero el flujo completo sin voz, después grabás el audio por separado y lo sincronizás

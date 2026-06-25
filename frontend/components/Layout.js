@@ -1,15 +1,22 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getProfile, formatAddress } from "../lib/storage";
+import { getProfile, formatAddress, clearProfile, setDemoMode } from "../lib/storage";
 
 export default function Layout({ children, title }) {
   const router = useRouter();
   const [profile, setProfile] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     setProfile(getProfile());
   }, []);
+
+  function handleLogout() {
+    clearProfile();
+    setDemoMode(false);
+    router.push("/");
+  }
 
   const navLinks = [
     { href: "/mis-vaquitas", label: "Mis Vaquitas", emoji: "🐄" },
@@ -42,16 +49,37 @@ export default function Layout({ children, title }) {
             ))}
 
             {profile && (
-              <Link
-                href="/perfil"
-                className="flex items-center gap-2 pl-3 pr-4 py-1.5 rounded-full bg-orange-50 border border-orange-200 hover:bg-orange-100 transition-all"
-              >
-                <span className="text-lg">{profile.photo || "🐄"}</span>
-                <div className="hidden sm:block text-left">
-                  <p className="text-xs font-bold text-gray-800 leading-tight">{profile.nickname}</p>
-                  <p className="text-xs text-gray-400 leading-tight">{formatAddress(profile.address)}</p>
-                </div>
-              </Link>
+              <div className="relative">
+                <button
+                  onClick={() => setShowMenu((v) => !v)}
+                  className="flex items-center gap-2 pl-3 pr-4 py-1.5 rounded-full bg-orange-50 border border-orange-200 hover:bg-orange-100 transition-all"
+                >
+                  <span className="text-lg">{profile.photo || "🐄"}</span>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-xs font-bold text-gray-800 leading-tight">{profile.nickname}</p>
+                    <p className="text-xs text-gray-400 leading-tight">{formatAddress(profile.address)}</p>
+                  </div>
+                  <span className="text-gray-400 text-xs ml-1">▾</span>
+                </button>
+
+                {showMenu && (
+                  <div className="absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-lg border border-orange-100 overflow-hidden z-50 animate-fade-in">
+                    <Link
+                      href="/perfil"
+                      onClick={() => setShowMenu(false)}
+                      className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-orange-50 transition-colors"
+                    >
+                      ✏️ Editar perfil
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-orange-100"
+                    >
+                      🚪 Cerrar sesión
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -67,7 +95,7 @@ export default function Layout({ children, title }) {
 
       {/* Footer minimalista */}
       <footer className="text-center py-8 text-xs text-gray-400">
-        🐄 Vaquitapp · Powered by Hardhat + Ethereum · Demo Universitario
+        🐄 Vaquitapp · Powered by Hardhat + Ethereum · Universidad Champagnat
       </footer>
     </div>
   );

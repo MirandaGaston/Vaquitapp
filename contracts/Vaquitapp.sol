@@ -143,6 +143,19 @@ contract Vaquitapp {
     }
 
     /**
+     * @notice El administrador puede editar nombre y descripción de la vaquita.
+     */
+    function updateGroup(
+        uint256       groupId,
+        string memory name,
+        string memory description
+    ) external groupExists(groupId) onlyAdmin(groupId) {
+        require(bytes(name).length > 0, "El nombre no puede estar vacio");
+        groups[groupId].name        = name;
+        groups[groupId].description = description;
+    }
+
+    /**
      * @notice Solicita unirse a una vaquita. Queda en estado Pending.
      */
     function requestToJoinGroup(

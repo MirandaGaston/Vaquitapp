@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { connectWallet } from "../lib/contract";
-import { getProfile, saveProfile, setDemoMode, isDemoMode } from "../lib/storage";
+import { getProfile, saveProfile, setCurrentAddress, hasProfile, setDemoMode, isDemoMode } from "../lib/storage";
 import { DEMO_PROFILE } from "../lib/demoData";
 
 export default function Landing() {
@@ -9,10 +9,10 @@ export default function Landing() {
   const [loading, setLoading] = useState(false);
   const [error, setError]   = useState("");
 
-  // Si ya tiene perfil conectado, ir directo a mis-vaquitas
+  // Si ya hay sesión activa, ir directo a mis-vaquitas
   useEffect(() => {
     const profile = getProfile();
-    if (profile?.address) {
+    if (profile?.nickname) {
       router.replace("/mis-vaquitas");
     }
   }, []);
@@ -22,12 +22,13 @@ export default function Landing() {
     setLoading(true);
     try {
       const { address } = await connectWallet();
-      const profile = getProfile();
-      if (profile?.address?.toLowerCase() === address.toLowerCase()) {
+      if (hasProfile(address)) {
+        // Ya tiene perfil guardado para esta wallet → entrar directo
+        setCurrentAddress(address);
         router.push("/mis-vaquitas");
       } else {
-        // Guardar address para la página de perfil
-        saveProfile({ ...(profile || {}), address });
+        // Wallet nueva → guardar address y pedir apodo
+        saveProfile({ address });
         router.push("/perfil");
       }
     } catch (err) {

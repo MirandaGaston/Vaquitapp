@@ -1,7 +1,25 @@
 import "../styles/globals.css";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { clearProfile } from "../lib/storage";
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.ethereum) return;
+
+    function handleAccountsChanged(accounts) {
+      // Cuando MetaMask cambia de cuenta, cerramos sesión y vamos a la landing
+      clearProfile();
+      router.push("/");
+    }
+
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+    return () => window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+  }, []);
+
   return (
     <>
       <Head>

@@ -20,6 +20,7 @@ export const ABI = [
   "function createGroup(string name, string description, bool isPublic, string category, uint256 goal, string adminNickname) returns (uint256)",
   "function requestToJoinGroup(uint256 groupId, string nickname)",
   "function approveMember(uint256 groupId, address memberAddress)",
+  "function updateGroup(uint256 groupId, string name, string description)",
   "function addContribution(uint256 groupId, uint256 amount, string note, string nickname)",
   "function addExpense(uint256 groupId, uint256 amount, string concept, string category, string nickname)",
 
@@ -202,6 +203,20 @@ export async function fetchMemberStatus(groupId, address, signer) {
   const contract = await getContract(signer);
   const status = await contract.getMemberStatus(groupId, address);
   return toNum(status);
+}
+
+export async function fetchGroupCount(signer) {
+  const contract = await getContract(signer);
+  const count = await contract.groupCount();
+  return toNum(count);
+}
+
+export async function fetchPublicGroups(signer) {
+  const count = await fetchGroupCount(signer);
+  if (count === 0) return [];
+  const ids = Array.from({ length: count }, (_, i) => i + 1);
+  const groups = await Promise.all(ids.map((id) => fetchGroup(id, signer)));
+  return groups.filter((g) => g.isPublic);
 }
 
 // ─── Verificar si contrato está disponible ────────────────────────────────────

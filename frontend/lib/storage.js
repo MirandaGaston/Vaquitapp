@@ -4,27 +4,67 @@
  * La identidad principal es la wallet.
  */
 
-const PROFILE_KEY = "vaquitapp_profile";
-const DEMO_MODE_KEY = "vaquitapp_demo_mode";
+const PROFILES_KEY    = "vaquitapp_profiles";    // { address → profile }
+const CURRENT_KEY     = "vaquitapp_current";     // address activa
+const DEMO_MODE_KEY   = "vaquitapp_demo_mode";
 
-export function getProfile() {
-  if (typeof window === "undefined") return null;
+function getAllProfiles() {
+  if (typeof window === "undefined") return {};
   try {
-    const raw = localStorage.getItem(PROFILE_KEY);
-    return raw ? JSON.parse(raw) : null;
+    return JSON.parse(localStorage.getItem(PROFILES_KEY) || "{}");
   } catch {
-    return null;
+    return {};
   }
+}
+
+// Migra perfil del formato viejo (vaquitapp_profile) al nuevo si existe
+function migrateOldProfile() {
+  const OLD_KEY = "vaquitapp_profile";
+  const old = localStorage.getItem(OLD_KEY);
+  if (!old) return;
+  try {
+    const p = JSON.parse(old);
+    if (p?.address && p?.nickname) {
+      saveProfile(p); // guarda en el nuevo formato
+    }
+    localStorage.removeItem(OLD_KEY);
+  } catch {}
+}
+
+// Devuelve el perfil de la dirección indicada, o el perfil activo si no se pasa address
+export function getProfile(address) {
+  if (typeof window === "undefined") return null;
+  migrateOldProfile();
+  const addr = address || localStorage.getItem(CURRENT_KEY);
+  if (!addr) return null;
+  return getAllProfiles()[addr.toLowerCase()] || null;
+}
+
+// Devuelve true si ya existe un perfil completo (con apodo) para esa address
+export function hasProfile(address) {
+  if (!address) return false;
+  const p = getAllProfiles()[address.toLowerCase()];
+  return !!(p?.nickname);
 }
 
 export function saveProfile(profile) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  if (!profile?.address) return;
+  const all = getAllProfiles();
+  all[profile.address.toLowerCase()] = profile;
+  localStorage.setItem(PROFILES_KEY, JSON.stringify(all));
+  localStorage.setItem(CURRENT_KEY, profile.address.toLowerCase());
+}
+
+export function setCurrentAddress(address) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(CURRENT_KEY, address.toLowerCase());
 }
 
 export function clearProfile() {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(PROFILE_KEY);
+  // Solo limpia la sesión activa, mantiene los perfiles guardados
+  localStorage.removeItem(CURRENT_KEY);
 }
 
 export function isDemoMode() {

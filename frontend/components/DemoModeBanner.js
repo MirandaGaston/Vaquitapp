@@ -1,10 +1,14 @@
-import { setDemoMode } from "../lib/storage";
+import { setDemoMode, clearProfile } from "../lib/storage";
+import { useRouter } from "next/router";
 
 export default function DemoModeBanner({ onExit }) {
+  const router = useRouter();
+
   function handleExit() {
     setDemoMode(false);
+    clearProfile(); // elimina el perfil demo (dirección fake)
     if (onExit) onExit();
-    window.location.reload();
+    router.push("/"); // vuelve a la landing para conectar wallet real
   }
 
   return (

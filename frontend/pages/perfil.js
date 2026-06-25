@@ -14,7 +14,7 @@ export default function Perfil() {
   const [saved,    setSaved]    = useState(false);
 
   useEffect(() => {
-    const profile = getProfile();
+    const profile = getProfile(); // usa la address activa
     if (!profile?.address) {
       router.replace("/");
       return;
