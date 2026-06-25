@@ -1,0 +1,31 @@
+# Claude Code local config (skills, settings — no van al repo)
+.claude/
+
+# Hardhat
+node_modules/
+cache/
+artifacts/
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors
+.vscode/
+.idea/
+*.suo
+*.user
