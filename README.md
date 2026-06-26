@@ -8,7 +8,7 @@
 [![Ver video](https://img.shields.io/badge/Video%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/oUik1y96Q9g?si=f94wyolPpNOkkt6a)
 [![Tests](https://img.shields.io/badge/Tests-21%20passing-brightgreen?style=for-the-badge)](#tests)
 
-*Hackathon · Taller de Computación II · Universidad Champagnat · 2026*
+*Hackathon · Teoría de la Computación II · Universidad Champagnat · 2026*
 
 </div>
 
