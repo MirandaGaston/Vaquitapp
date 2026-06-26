@@ -44,12 +44,17 @@ Vaquitapp registra cada aporte y gasto en un **smart contract en blockchain**. E
 
 ## Entregables del proyecto
 
-| Documento | Descripción |
-|-----------|-------------|
-| [LeanCanvas-Vaquitapp.pdf](LeanCanvas-Vaquitapp.pdf) | Lean Canvas completo |
-| [MemoriaTecnica-Vaquitapp.pdf](MemoriaTecnica-Vaquitapp.pdf) | Memoria técnica (9 secciones) |
-| [Presentación - Vaquitapp.pptx](Presentación%20-%20Vaquitapp.pptx) | Presentación del proyecto |
-| [SPEECH.md](SPEECH.md) | Discurso oral (versión 3 min y 90 seg) |
+Todos los archivos requeridos se encuentran en la **raíz del repositorio**:
+
+| Entregable | Archivo | Ubicación |
+|------------|---------|-----------|
+| Lean Canvas | [LeanCanvas-Vaquitapp.pdf](LeanCanvas-Vaquitapp.pdf) | `/LeanCanvas-Vaquitapp.pdf` |
+| Memoria Técnica | [MemoriaTecnica-Vaquitapp.pdf](MemoriaTecnica-Vaquitapp.pdf) | `/MemoriaTecnica-Vaquitapp.pdf` |
+| Pitch Deck | [Presentación - Vaquitapp.pptx](Presentación%20-%20Vaquitapp.pptx) | `/Presentación - Vaquitapp.pptx` |
+| Video Demo | [Ver en YouTube](https://youtu.be/oUik1y96Q9g?si=f94wyolPpNOkkt6a) | YouTube (link arriba) |
+| Evidencias MVP | [Ver carpeta /docs](docs/) | `/docs/` |
+| Discurso oral | [SPEECH.md](SPEECH.md) | `/SPEECH.md` |
+| Código fuente | [/frontend](frontend/) y [/contracts](contracts/) | Ver estructura abajo |
 
 ---
 
