@@ -1,192 +1,207 @@
+<div align="center">
+
 # 🐄 Vaquitapp
 
-> La forma más transparente y divertida de organizar gastos grupales.
+**Gastos grupales transparentes, respaldados por blockchain.**
 
-Demo universitaria — Proyecto integrador de blockchain + web3 + Next.js.
+[![Demo en vivo](https://img.shields.io/badge/Demo%20en%20vivo-Vercel-black?style=for-the-badge&logo=vercel)](https://vaquitapp-gamma.vercel.app)
+[![Ver video](https://img.shields.io/badge/Video%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/oUik1y96Q9g?si=f94wyolPpNOkkt6a)
+[![Tests](https://img.shields.io/badge/Tests-21%20passing-brightgreen?style=for-the-badge)](#tests)
 
----
+*Hackathon · Taller de Computación II · Universidad Champagnat · 2026*
 
-## ¿Qué es Vaquitapp?
-
-Vaquitapp permite crear **vaquitas digitales grupales**: grupos donde un conjunto de personas puede:
-
-- Aportar fondos ficticios (VAQ$)
-- Registrar gastos con categoría y concepto
-- Ver un historial transparente auditado por blockchain
-- Aprobar miembros y gestionar roles
-
-No maneja dinero real. Los montos son **lógicos y ficticios** mostrados como VAQ$.  
-La identidad del usuario es su **wallet** de MetaMask — sin email, sin contraseña.
+</div>
 
 ---
 
-## Tecnologías
+## Video demo
+
+<div align="center">
+
+[![Ver demo en YouTube](https://img.youtube.com/vi/oUik1y96Q9g/0.jpg)](https://youtu.be/oUik1y96Q9g?si=f94wyolPpNOkkt6a)
+
+</div>
+
+---
+
+## El problema
+
+Cuando un grupo organiza una vaquita, siempre pasa lo mismo:
+
+> *"¿Quién puso qué?", "¿Cuánto gastamos?", "¿Me podés mostrar el recibo?"*
+
+Las herramientas actuales (WhatsApp, hojas de cálculo, Splitwise) son **modificables**. Cualquiera puede cambiar los datos — incluso el organizador.
+
+## La solución
+
+Vaquitapp registra cada aporte y gasto en un **smart contract en blockchain**. El historial es público, auditable e **inmutable** — no lo puede cambiar nadie, ni el creador del grupo.
+
+- Sin email ni contraseña — la identidad es tu **wallet MetaMask**
+- Montos simbólicos en **VAQ$** — sin dinero real
+- **Modo demo** disponible sin MetaMask
+
+---
+
+## Entregables del proyecto
+
+| Documento | Descripción |
+|-----------|-------------|
+| [LeanCanvas-Vaquitapp.pdf](LeanCanvas-Vaquitapp.pdf) | Lean Canvas completo |
+| [MemoriaTecnica-Vaquitapp.pdf](MemoriaTecnica-Vaquitapp.pdf) | Memoria técnica (9 secciones) |
+| [Presentación - Vaquitapp.pptx](Presentación%20-%20Vaquitapp.pptx) | Presentación del proyecto |
+| [SPEECH.md](SPEECH.md) | Discurso oral (versión 3 min y 90 seg) |
+
+---
+
+## Stack tecnológico
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | Next.js 14 (Pages Router) + JavaScript |
+| Frontend | Next.js 14 · JavaScript · Pages Router |
 | Estilos | Tailwind CSS v3 |
 | Smart Contract | Solidity 0.8.24 |
-| Entorno blockchain | Hardhat |
-| Conexión frontend/contrato | ethers.js v6 |
-| Wallet | MetaMask |
-| Red demo | Hardhat local (chainId 1337) |
-| Datos auxiliares | localStorage (apodo, avatar) |
+| Entorno blockchain | Hardhat 2.22 |
+| Integración web3 | ethers.js v6 |
+| Wallet / Auth | MetaMask |
+| Red local | Hardhat (chainId 1337) |
+| Deploy frontend | Vercel |
+| IA de desarrollo | Claude Code (Anthropic) |
 
 ---
 
-## Estructura del proyecto
-
-```
-/
-├── contracts/
-│   └── Vaquitapp.sol          # Contrato principal
-├── scripts/
-│   └── deploy.js              # Script de despliegue
-├── test/
-│   └── Vaquitapp.test.js      # Tests completos
-├── frontend/
-│   ├── pages/
-│   │   ├── index.js           # Landing
-│   │   ├── perfil.js          # Crear/editar perfil
-│   │   ├── mis-vaquitas.js    # Lista de vaquitas del usuario
-│   │   ├── crear.js           # Crear vaquita
-│   │   └── vaquita/[id].js    # Detalle de vaquita
-│   ├── components/
-│   │   ├── Layout.js
-│   │   ├── VaquitaCard.js
-│   │   ├── MemberList.js
-│   │   ├── MovimientosList.js
-│   │   ├── TxModal.js
-│   │   └── DemoModeBanner.js
-│   ├── lib/
-│   │   ├── contract.js        # Integración ethers.js
-│   │   ├── storage.js         # localStorage helpers
-│   │   └── demoData.js        # Datos mock para modo demo
-│   ├── styles/globals.css
-│   └── public/contract-address.json
-├── hardhat.config.js
-├── package.json
-├── README.md
-├── DEMO_SCRIPT.md
-├── VIDEO_SCRIPT.md
-└── SPEECH.md
-```
-
----
-
-## Instalación
+## Cómo levantar el proyecto
 
 ### Prerrequisitos
 
 - Node.js v18+
-- npm v9+
-- MetaMask instalado en el navegador
+- MetaMask en el navegador
+- 3 terminales abiertas
 
-### 1. Instalar dependencias de Hardhat (raíz)
+### 1. Instalar dependencias
 
 ```bash
-cd C:\Users\alejo\2do\Vaquitapp
+# Raíz del proyecto
 npm install
+
+# Frontend
+cd frontend && npm install
 ```
 
-### 2. Instalar dependencias del frontend
+### 2. Levantar el nodo Hardhat
 
 ```bash
-cd frontend
-npm install
-```
-
----
-
-## Correr la demo
-
-### Paso 1 — Levantar Hardhat (en una terminal)
-
-```bash
-# Desde la raíz del proyecto
 npx hardhat node
 ```
 
-Esto levanta una blockchain local en `http://127.0.0.1:8545`.  
-Hardhat muestra 20 wallets con ETH de prueba. **Anotá la clave privada de las primeras 2** para importarlas en MetaMask.
+Dejá esta terminal corriendo. Hardhat muestra 20 wallets — anotá las claves privadas de las primeras dos.
 
-### Paso 2 — Desplegar el contrato (en otra terminal)
+### 3. Desplegar el contrato
 
 ```bash
-# Desde la raíz del proyecto
 npm run deploy
 ```
 
-Esto:
-1. Compila `Vaquitapp.sol`
-2. Despliega en la red local
-3. Escribe la dirección en `frontend/public/contract-address.json`
-4. Copia el ABI en `frontend/lib/abi.json`
+Esto compila `Vaquitapp.sol`, lo despliega y escribe la dirección en `frontend/public/contract-address.json`.
 
-### Paso 3 — Configurar MetaMask
+### 4. Configurar MetaMask
 
-1. Abrí MetaMask
-2. Agregá una red personalizada:
-   - **Nombre**: Hardhat Local
-   - **RPC URL**: `http://127.0.0.1:8545`
-   - **Chain ID**: `1337`
-   - **Símbolo**: ETH
-3. Importá la cuenta #0 de Hardhat (clave privada que mostró el nodo)
-4. Para simular otro usuario: importá la cuenta #1
+| Campo | Valor |
+|-------|-------|
+| Nombre | Hardhat Local |
+| RPC URL | `http://127.0.0.1:8545` |
+| Chain ID | `1337` |
+| Símbolo | ETH |
 
-### Paso 4 — Correr el frontend
+Importá la cuenta #0 (admin) y la cuenta #1 (miembro) con sus claves privadas.
+
+### 5. Correr el frontend
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Abrir: [http://localhost:3000](http://localhost:3000)
+Abrir: **http://localhost:3000**
 
 ---
 
-## Flujo de demo paso a paso
+## Flujo de demo
 
-1. Abrí la app → conectá MetaMask (cuenta #0)
-2. Creá el perfil: apodo "Mati", avatar 🦊
-3. Creá la vaquita: "Regalo para el cumple de Sofi 🎁" — Categoría: Regalo — Objetivo: 100000
-4. Cambiá a cuenta #1 en MetaMask → recargá la página
-5. Creá perfil: apodo "Lau"
-6. Andá al detalle de la vaquita (vaquita/1) → "Solicitar unirme"
-7. Volvé a cuenta #0 → aprobá a Lau
-8. Volvé a cuenta #1 → cargá aporte: VAQ$ 30.000
-9. En cuenta #0 → cargá aporte: VAQ$ 40.000
-10. En cuenta #0 → cargá gasto: "Compra del regalo", VAQ$ 55.000
-11. Mostrá el historial → señalá los eventos en blockchain
+**Caso: "Regalo para el cumple de Sofi 🎁"**
+
+| Paso | Acción | Cuenta |
+|------|--------|--------|
+| 1 | Conectar MetaMask y crear perfil "Mati" | #0 |
+| 2 | Crear vaquita — objetivo VAQ$ 100.000 | #0 |
+| 3 | Crear perfil "Lau" y solicitar unirse | #1 |
+| 4 | Aprobar a Lau como miembro | #0 |
+| 5 | Cargar aporte VAQ$ 30.000 | #1 |
+| 6 | Cargar aporte VAQ$ 40.000 | #0 |
+| 7 | Registrar gasto "Compra del regalo" VAQ$ 55.000 | #0 |
+| 8 | Ver historial — saldo restante VAQ$ 15.000 | cualquiera |
+
+> **Sin MetaMask:** hacé clic en "Entrar en modo demo" en la landing — el flujo completo es navegable con datos mock.
 
 ---
 
-## Modo demo (sin MetaMask)
+## Arquitectura
 
-Si MetaMask no está disponible, la app ofrece **Modo Demo** automáticamente.  
-Los datos son mock pero el flujo completo es navegable y la UI es idéntica.  
-Activar desde el botón "Entrar en modo demo" de la landing.
+```
+/
+├── contracts/
+│   └── Vaquitapp.sol          # Contrato: grupos, roles, aportes, gastos
+├── scripts/
+│   └── deploy.js              # Compila, despliega y exporta ABI + address
+├── test/
+│   └── Vaquitapp.test.js      # 21 tests (Hardhat + Chai)
+└── frontend/
+    ├── pages/
+    │   ├── index.js           # Landing + conectar wallet
+    │   ├── perfil.js          # Crear/editar perfil
+    │   ├── mis-vaquitas.js    # Lista de vaquitas del usuario
+    │   ├── crear.js           # Nueva vaquita
+    │   └── vaquita/[id].js    # Detalle: miembros, aportes, gastos
+    ├── components/            # Layout, VaquitaCard, MemberList, TxModal...
+    └── lib/
+        ├── contract.js        # ABI embebido + helpers ethers.js v6
+        ├── storage.js         # localStorage (apodo, avatar)
+        └── demoData.js        # Datos mock para modo demo
+```
+
+---
+
+## Roles en el contrato
+
+| Rol | Permisos |
+|-----|----------|
+| **Admin** | Aportar · cargar gastos · aprobar miembros |
+| **Aprobado** | Aportar |
+| **Pendiente** | Espera aprobación del admin |
 
 ---
 
 ## Tests
 
 ```bash
-# Desde la raíz
 npm test
 ```
 
-Cubre: crear grupo, solicitar ingreso, aprobar miembro, cargar aportes, cargar gastos, flujo completo.
+21 tests — crean grupos, solicitan ingreso, aprueban miembros, cargan aportes y gastos, validan roles y saldos.
 
 ---
 
-## Qué queda fuera del MVP
+## Roadmap
 
-- Sistema de invitaciones por link/código
-- Notificaciones en tiempo real
-- Explorador público de vaquitas
-- Soporte multi-red (Sepolia, Polygon)
-- IPFS para fotos de perfil
-- Votaciones para aprobación colectiva de gastos
-- Integración con pagos reales
+- [ ] Invitaciones por link / código QR
+- [ ] Deploy en red pública (Polygon / Sepolia)
+- [ ] Votaciones para aprobar gastos grandes
+- [ ] Notificaciones en tiempo real con eventos blockchain
+- [ ] IPFS para fotos de perfil
+
+---
+
+<div align="center">
+
+Hecho con 💚 para Hackathon T. de Comp II · Universidad Champagnat
+
+</div>
